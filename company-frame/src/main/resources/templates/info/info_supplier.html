@@ -68,7 +68,11 @@
             endTime: null,
             pageNum: 1,
             pageSize: 10
-        }
+        };
+        var codeParam = {
+            providerCode: null,
+            providerName:null
+        };
         //searchParam.needsId=[[${needsId}]];
         CoreUtil.sendAjax("/customer/getsupplier", JSON.stringify(searchParam), function (res) {
             laypageTable(res.data.totalRows, searchParam.pageNum);
@@ -166,7 +170,7 @@
         $("#search").click(function () {
             searchParam.id = $("#id").val();
             searchParam.status = $("#status").val();
-            searchParam.processCode = $("#processCode").val();
+            //$("#id").val(searchParam.status);
             searchParam.pageNum = 1;
             CoreUtil.sendAjax("/customer/getsupplier", JSON.stringify(searchParam), function (res) {
                 laypageTable(res.data.totalRows, searchParam.pageNum);
@@ -209,6 +213,8 @@
                     tipDialog(ids, data.id);
                     break;
                 case 'useselect':
+                    codeParam.providerCode=data.providerCode;
+                    codeParam.providerName=data.providerName;
                     selectDialog(data.providerCode);
                     break;
 
@@ -220,18 +226,37 @@
             return false;
         });
         //选择
-       var datacode="123";
         var selectDialog = function (providerCode) {
-            alert(providerCode);
-
-            var index=parent.layer.getFrameIndex(window.name); //获取当前窗口的name
-            parent.layer.close(index);
-            //window.parent.location.reload();
+            sendRequest();
+            //parent.layer.msg('Hi, man='+providerCode, {shade: 0.3})
+            // parent.$("#codespan").val("获取需求"+"("+providerCode+")");
+            //parent.layer.tips('Look here', '#Code', {time: 5000});
         }
 
-        var callbackdata = function callbackdata() {
-            var data = datacode;
-            return data;
+        /*
+       拉取网络请求
+       * */
+        /*
+      拉取网络请求
+      * */
+        var sendRequest = function () {
+
+            layer.open({
+                content: "获取"+codeParam.providerName+"最新需求吗?",
+                yes: function (index, layero) {
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    CoreUtil.sendAjax("/customer/sendRecruitRequest", JSON.stringify(codeParam), function (res) {
+                        layer.msg(res.message);
+                        var index=parent.layer.getFrameIndex(window.name); //获取当前窗口的name
+                        parent.$(".layui-laypage-btn").click();
+                        parent.layer.msg('Hi, man='+providerCode, {shade: 0.3})
+                        parent.layer.close(index);
+                        $(".layui-laypage-btn").click();
+                    }, "POST", false, function (res) {
+                        layer.msg("抱歉！您暂无删除需求的权限");
+                    });
+                }
+            })
         }
 
         //删除

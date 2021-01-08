@@ -9,10 +9,7 @@ import com.szxx.recruit.exception.code.BaseResponseCode;
 import com.szxx.recruit.service.CustomerService;
 import com.szxx.recruit.utils.DataResult;
 import com.szxx.recruit.utils.JwtTokenUtil;
-import com.szxx.recruit.vo.req.InfoAddReqVO;
-import com.szxx.recruit.vo.req.infoPageReqVO;
-import com.szxx.recruit.vo.req.needsPageReqVO;
-import com.szxx.recruit.vo.req.supplierPageReqVO;
+import com.szxx.recruit.vo.req.*;
 import com.szxx.recruit.vo.resp.PageVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,11 +38,15 @@ public class CustomerController {
     @ApiOperation(value = "发送招聘需求接口")
     @LogAnnotation(title = "客户模块", action = "招聘需求")
     //@RequiresPermissions("sys:dept:add")
-    public DataResult<RecruitmentNeeds> sendRecruitRequest(String providerCode)
+    public DataResult<RecruitmentNeeds> sendRecruitRequest(@Valid @RequestBody RequestDataReqVO vo,BindingResult bindingResult)
             throws Exception {
-
+        DataResult<RecruitmentNeeds> result=null;
+        if(bindingResult.hasErrors()){
+            result=new DataResult(BaseResponseCode.OPERATION_ERRO.getCode(),bindingResult.getFieldError().getDefaultMessage());
+            return result;
+        }
         log.info("=====");
-        DataResult<RecruitmentNeeds> result = customerService.getAndSaveReq(providerCode);
+        result = customerService.getAndSaveReq(vo.getProviderCode());
         return result;
     }
 

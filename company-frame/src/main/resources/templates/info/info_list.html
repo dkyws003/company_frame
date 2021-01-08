@@ -208,7 +208,7 @@
                 <input type="text" id="id" class="layui-input" autocomplete="off" placeholder="请输入查询ID">
             </div>
             <div class="layui-input-inline">
-                <input type="text" id="processCode" class="layui-input" autocomplete="off" placeholder="请输入流程编号">
+                <input type="text" id="Code" class="layui-input" autocomplete="off" placeholder="请输入流程编号">
             </div>
 
             <div class="layui-input-inline">
@@ -236,8 +236,10 @@
 <script type="text/html" id="toolbar">
     <div class="layui-btn-group">
         <button type="button" class="layui-btn" lay-event="sendRecruitRequest" shiro:hasPermission="sys:infos:add">
-            <i class="layui-icon">&#xe9aa;</i> 获取需求
+            <i class="layui-icon" id ="codespan" >&#xe9aa;</i> 获取需求
+
         </button>
+
     </div>
 
     <div class="layui-btn-group">
@@ -291,6 +293,9 @@
             price: null,
             fileName: null,
             pathName: null
+        };
+        var codeParam = {
+            providerCode: null,
         };
         CoreUtil.sendAjax("/customer/needs", JSON.stringify(searchParam), function (res) {
             laypageTable(res.data.totalRows, searchParam.pageNum);
@@ -438,7 +443,7 @@
         $("#search").click(function () {
             searchParam.id = $("#id").val();
             searchParam.status = $("#status").val();
-            searchParam.processCode = $("#processCode").val();
+            searchParam.processCode = $("#Code").val();
             searchParam.pageNum = 1;
             CoreUtil.sendAjax("/customer/needs", JSON.stringify(searchParam), function (res) {
                 laypageTable(res.data.totalRows, searchParam.pageNum);
@@ -453,12 +458,11 @@
         });
 
         table.on('toolbar(info_table)', function (obj) {
-
             var checkStatus = table.checkStatus(obj.config.id);
             switch (obj.event) {
                 case 'sendRecruitRequest':
-
                     sendRequest();
+                    toSupplier();
                     break;
                 case 'batchDeleted':
                     var checkStatus = table.checkStatus(obj.config.id);
@@ -473,7 +477,6 @@
                         tipDialog(ids, "选中的");
                     }
                     break;
-
             }
             ;
         });
@@ -588,7 +591,6 @@
             }, "POST", false, function (res) {
                 layer.msg("抱歉！您暂无新增用户的权限");
             });
-
             return false;
         });
         //取消
@@ -612,45 +614,26 @@
                 time: 0,    //几秒后自动关闭，默认0时不关闭
                 anim: 1,    //动画效果
                 resize: false,  //设置成不允许拉伸
-                content: url,  //iframe的url
-                btn: ['确定','关闭'],
-                yes: function (index, layero) {
-                    layer.close(index); //如果设定了yes回调，需进行手工关闭
-                    //当点击‘确定'按钮的时候，获取弹出层返回的值
-                    var iframeWindow = window['layui-layer-iframe'+ index];
-                    var res= iframeWindow.callbackdata();
-                    alert(index+"=="+JSON.stringify(res));
-                    var checkStatus = iframeWindow.layui.table.checkStatus('ID');
-                    alert(index+"=="+2);
-                    var data = checkStatus.data;
-                    alert(index+"=="+JSON.stringify(data));
-
-                    CoreUtil.sendAjax("/customer/sendRecruitRequest", "", function (res) {
-                        layer.msg(res.message);
-                        $(".layui-laypage-btn").click();
-                    }, "POST", false, function (res) {
-                        layer.msg("抱歉！您暂无删除需求的权限");
-                    });
-                }
+                content: url //iframe的url
             });
         }
         /*
         拉取网络请求
         * */
         var sendRequest = function () {
-            toSupplier();
-           /* layer.open({
+
+            layer.open({
                 content: "获取最新需求吗?",
                 yes: function (index, layero) {
                     layer.close(index); //如果设定了yes回调，需进行手工关闭
-                    CoreUtil.sendAjax("/customer/sendRecruitRequest", "", function (res) {
+                    CoreUtil.sendAjax("/customer/sendRecruitRequest", JSON.stringify(codeParam), function (res) {
                         layer.msg(res.message);
                         $(".layui-laypage-btn").click();
                     }, "POST", false, function (res) {
                         layer.msg("抱歉！您暂无删除需求的权限");
                     });
                 }
-            })*/
+            })
         }
         var toDetail = function (data) {
             // alert(JSON.stringify(data));
