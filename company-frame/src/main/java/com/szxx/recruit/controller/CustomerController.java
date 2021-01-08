@@ -126,8 +126,6 @@ public class CustomerController {
         result.setData(customerService.getPageCandidates(vo));
         return result;
     }
-
-
     /*
      *
      * 获得候选列表
