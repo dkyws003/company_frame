@@ -27,19 +27,6 @@
 
 #### 效果展示
 
-![](https://gitee.com/yingxue985/company-frame/raw/master/src/main/resources/static/images/class/1.JPG) 
-![](https://gitee.com/yingxue985/company-frame/raw/master/src/main/resources/static/images/class/2.JPG)
-![](https://gitee.com/yingxue985/company-frame/raw/master/src/main/resources/static/images/class/.JPG) 
-![](https://gitee.com/yingxue985/company-frame/raw/master/src/main/resources/static/images/class/4.JPG) 
-![](https://gitee.com/yingxue985/company-frame/raw/master/src/main/resources/static/images/class/5.JPG) 
-![](https://gitee.com/yingxue985/company-frame/raw/master/src/main/resources/static/images/class/6.JPG) 
-![](https://gitee.com/yingxue985/company-frame/raw/master/src/main/resources/static/images/class/7.JPG) 
-![](https://gitee.com/yingxue985/company-frame/raw/master/src/main/resources/static/images/class/8.JPG) 
-![](https://gitee.com/yingxue985/company-frame/raw/master/src/main/resources/static/images/class/9.JPG) 
-![](https://gitee.com/yingxue985/company-frame/raw/master/src/main/resources/static/images/class/10.JPG) 
-![](https://gitee.com/yingxue985/company-frame/raw/master/src/main/resources/static/images/class/11.JPG) 
-![](https://gitee.com/yingxue985/company-frame/raw/master/src/main/resources/static/images/class/12.JPG)  
-
 
 
 
