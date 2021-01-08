@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szxx.recruit.mapper.RecruitmentNeedsMapper">
+  <resultMap id="BaseResultMap" type="com.szxx.recruit.entity.RecruitmentNeeds">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="process_code" jdbcType="VARCHAR" property="processCode" />
+    <result column="jd_description" jdbcType="VARCHAR" property="jdDescription" />
+    <result column="jd_path" jdbcType="VARCHAR" property="jdPath" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, process_code, jd_description, jd_path, `status`, create_time, update_time, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from recruitment_needs
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap"
+     parameterType="com.szxx.recruit.vo.req.needsPageReqVO"
+     >
+      select <include refid="Base_Column_List"></include>
+      from recruitment_needs
+
+      <where>
+        deleted=1
+        <if test="processCode!=null and processCode!=''">
+          AND process_code LIKE concat('%',#{processCode},'%')
+        </if>
+        <if test="id!=null and id!=''">
+          AND id LIKE concat('%',#{id},'%')
+        </if>
+        <if test="startTime!=null and startTime!=''">
+          AND create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+          AND create_time &lt;= #{endTime}
+        </if>
+
+        <if test="status!=null and status!='' or status==0 ">
+          AND `status`=#{status}
+        </if>
+      </where>
+      order by create_time DESC
+
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from recruitment_needs
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <update id="deletedNeeds">
+      update recruitment_needs
+      <set>
+        deleted = 0,
+      </set>
+      where id in
+      <foreach collection="ids" open="(" close=")" separator="," item="item">
+        #{item}
+      </foreach>
+
+    </update>
+
+
+
+    <insert id="insert" parameterType="com.szxx.recruit.entity.RecruitmentNeeds">
+    insert into recruitment_needs (id, process_ode, jd_description, 
+      jd_path, `status`, create_time, 
+      update_time, deleted)
+    values (#{id,jdbcType=VARCHAR}, #{processOde,jdbcType=VARCHAR}, #{jdDescription,jdbcType=VARCHAR}, 
+      #{jdPath,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.szxx.recruit.entity.RecruitmentNeeds">
+    insert into recruitment_needs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="processOde != null">
+        process_ode,
+      </if>
+      <if test="jdDescription != null">
+        jd_description,
+      </if>
+      <if test="jdPath != null">
+        jd_path,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="processOde != null">
+        #{processOde,jdbcType=VARCHAR},
+      </if>
+      <if test="jdDescription != null">
+        #{jdDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="jdPath != null">
+        #{jdPath,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.szxx.recruit.entity.RecruitmentNeeds">
+    update recruitment_needs
+    <set>
+      <if test="processOde != null">
+        process_ode = #{processOde,jdbcType=VARCHAR},
+      </if>
+      <if test="jdDescription != null">
+        jd_description = #{jdDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="jdPath != null">
+        jd_path = #{jdPath,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.szxx.recruit.entity.RecruitmentNeeds">
+    update recruitment_needs
+    set process_ode = #{processOde,jdbcType=VARCHAR},
+      jd_description = #{jdDescription,jdbcType=VARCHAR},
+      jd_path = #{jdPath,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

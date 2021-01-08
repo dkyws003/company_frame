@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/custom.form.css">
+</head>
+<body>
+<div class="panel panel-default operation_info" hidden>
+    <div class="panel-heading title"></div>
+    <div class="layui-card-body">
+        <div class="layui-container">
+            <button type="button" class="layui-btn" id="uploadbtn"><i class="layui-icon"></i>上传文件</button>
+            <span></span>
+            <form class="layui-form " action="" lay-filter="info-form" id="info-form" style="width: 700px;margin-top: 10px">
+                <input name="id" hidden/>
+                <input name="needsId" hidden/>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               name="candidateName"
+                               lay-verify=“required”
+                               placeholder="请输入姓名"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">学校</label>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               name="school"
+                               lay-verify=“required”
+                               placeholder="请输入学校"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">岗位名称</label>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               name="personWork"
+                               lay-verify=“required”
+                               placeholder="请输入岗位名称"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">联系方式</label>
+                    <div class="layui-input-block">
+                        <input type="tel"
+                               name="phone"
+                               lay-verify=“required|phone”
+                               placeholder="请输入联系方式"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">身份证号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="idCard" placeholder="请输入身份证号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label ">可入职时间</div>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               class="layui-input"
+                               id="entryDate"
+                               lay-verify=“required|date”
+                               placeholder="可入职时间">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-form-label ">毕业时间</div>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               class="layui-input"
+                               id="graduatedDate"
+                               lay-verify=“required|date”
+                               placeholder="毕业时间">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">专业</label>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               name="profession"
+                               lay-verify=“required”
+                               placeholder="请输入专业"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="sex" value=1 title="男">
+                        <input type="radio" name="sex" value=2 title="女">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">供应商名称</label>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               name="pravidorName"
+                               placeholder="请输入供应商名称"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">合同性质</label>
+                    <div class="layui-input-block" lay-verify=“required“>
+                        <input type="radio" name="contractNature" value=1 title="人员外包">
+                        <input type="radio" name="contractNature" value=2 title="项目外包">
+                        <input type="radio" name="contractNature" value=3 title="维保">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-form-label ">实际到岗时间</div>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               class="layui-input"
+                               id="arriveDate"
+                               lay-verify=“required|date“
+                               placeholder="实际到岗时间">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Y:离职N:在职</label>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               name="isLeave"
+                               lay-verify=“required“
+                               placeholder="请输入在职状态"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">报价</label>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               name="price"
+                               lay-verify=“required“
+                               placeholder="请输入报价"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">文件夹名</label>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               name="fileName"
+                               lay-verify=“required“
+                               placeholder="请输入文件夹名"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">简历名称</label>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               name="pathName"
+                               lay-verify=“required“
+                               placeholder="请输入简历名称"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="status" lay-skin="switch" lay-filter="switch" lay-text="启用|禁用"
+                               checked>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+                        <button class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+<div class="info_table_div">
+    <div id="searchParam" shiro:hasPermission="sys:infos:list">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" id="id" class="layui-input" autocomplete="off" placeholder="请输入查询ID">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" id="processCode" class="layui-input" autocomplete="off" placeholder="请输入流程编号">
+            </div>
+
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="createTime" placeholder="创建时间">
+            </div>
+            <div class="layui-input-inline layui-form">
+                <select id="status">
+                    <option value="">请选择账号状态</option>
+                    <option value="1">正常</option>
+                    <option value="2">禁用</option>
+                </select>
+            </div>
+            <div class="layui-input-inline ">
+                <button class="layui-btn" id="search">查询</button>
+            </div>
+        </div>
+
+    </div>
+    <table class="layui-hide" id="info_table" lay-filter="info_table"></table>
+    <div id="laypage" class=" $(‘.layui-laypage-btn’).click();"></div>
+</div>
+<div id="deptTree" style="display: none"></div>
+<div id="roles" class="demo-transfer" style="display: none"></div>
+</body>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-group">
+        <button type="button" class="layui-btn" lay-event="sendRecruitRequest" shiro:hasPermission="sys:infos:add">
+            <i class="layui-icon">&#xe9aa;</i> 获取需求
+        </button>
+    </div>
+
+    <div class="layui-btn-group">
+        <button type="button" class="layui-btn" lay-event="batchDeleted" shiro:hasPermission="sys:infos:deleted">
+            <i class="layui-icon">&#xe640;</i> 批量删除
+        </button>
+    </div>
+</script>
+<script type="text/html" id="tool">
+    <a class="layui-btn  layui-btn-xs" lay-event="operationDetail" shiro:hasPermission="sys:infos:detail">查看候选人</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="sys:infos:add">添加候选人</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sys:infos:deleted">删除</a>
+</script>
+<script src="/layui/layui.all.js"></script>
+<script src="/js/core.util.js"></script>
+<script>
+    var table = layui.table;
+    var laypage = layui.laypage
+    var form = layui.form;
+    var layer = layui.layer;
+    var $ = jQuery = layui.jquery;
+    var laydate = layui.laydate;
+    var tree = layui.tree;
+    var transfer = layui.transfer;
+    var upload=layui.upload;
+    layui.use(['table', 'laypage', 'layer', 'laydate', 'tree', 'transfer', 'form','upload'], function () {
+        var searchParam = {
+            id: null,
+            processCode: null,
+            status: null,
+            startTime: null,
+            endTime: null,
+            pageNum: 1,
+            pageSize: 10
+        };
+        var Param = {
+            needsId: null,
+            candidateName: null,
+            school: null,
+            personWork: null,
+            phone: null,
+            idCard: null,
+            entryDate: null,
+            graduatedDate: null,
+            profession: null,
+            sex: null,
+            pravidorName: null,
+            contractNature: null,
+            arriveDate: null,
+            isLeave: null,
+            price: null,
+            fileName: null,
+            pathName: null
+        };
+        CoreUtil.sendAjax("/customer/needs", JSON.stringify(searchParam), function (res) {
+            laypageTable(res.data.totalRows, searchParam.pageNum);
+            if (res.data.list != null) {
+                loadTable(res.data.list);
+            }
+        }, "POST", false, function (res) {
+            layer.msg("抱歉！您暂无获取用户列表的权限");
+            var noAuthorityData = [];
+            loadTable(noAuthorityData);
+        });
+        var laypageTable = function (count, currentPage) {
+            laypage.render({
+                elem: 'laypage'
+                , count: count
+                , limit: searchParam.pageSize
+                , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                , curr: location.hash.replace('#!currentPage=', '') //获取起始页
+                , hash: 'currentPage' //自定义hash值
+                , jump: function (obj, first) {
+                    if (!first) {
+                        searchParam.pageNum = obj.curr;
+                        searchParam.pageSize = obj.limit;
+                        CoreUtil.sendAjax("/customer/needs", JSON.stringify(searchParam), function (res) {
+                            if (res.data.list != null) {
+                                loadTable(res.data.list);
+                                laypageTable(res.data.totalRows, searchParam.pageNum);
+                            }
+                        }, "POST", false, function (res) {
+                            layer.msg("抱歉！您暂无获取用户列表的权限");
+                            var noAuthorityData = [];
+                            loadTable(noAuthorityData);
+                        });
+                    }
+                }
+            });
+        };
+        //渲染table
+        var loadTable = function (data) {
+            table.render({
+                elem: '#info_table'
+                , cols: [
+                    [
+                        {type: 'checkbox', fixed: 'left'},
+                        {field: 'id', title: 'ID', width: 70, sort: true},
+                        {field: 'processCode', title: '流程编号', width: 130},
+                        {field: 'jdDescription', title: 'JD描述', width: 130},
+                        {field: 'jdPath', title: 'JD附件路径', width: 130},
+
+                        {
+                            field: 'createTime', title: '创建时间', minWidth: 150, templet: function (item) {
+                                return CoreUtil.formattime(item.createTime);
+                            }
+                        },
+                        {
+                            field: 'updateTime', title: '更新时间', minWidth: 150, templet: function (item) {
+                                return CoreUtil.formattime(item.updateTime);
+                            }
+                        },
+                        {
+                            field: 'status', title: '状态', width: 100, templet: function (item) {
+                                if (item.status === 1) {
+                                    return '  <input type="checkbox" lay-skin="switch" lay-text="正常|禁用" checked disabled>';
+                                }
+                                if (item.status === 2) {
+                                    return '  <input type="checkbox" lay-skin="switch" lay-text="正常|禁用" disabled>';
+                                }
+                            }
+                        },
+                        {width: 260, toolbar: "#tool", title: '操作'}
+                    ]
+                ]
+                , data: data
+                , even: true
+                , limit: data.length
+                , limits: [10, 20, 30, 40, 50]
+                , toolbar: '#toolbar'
+
+            });
+        };
+        //上传文件
+        //指定允许上传的文件类型
+        upload.render({
+            elem: '#uploadbtn'
+            , url: '/customer/uploadZipFile' //改成您自己的上传接口
+            , accept: 'file' //普通文件
+            ,exts: 'png|jpeg|pdf|jpg|doc|docx|xls|xlsx|zip|rar', //可选的文件类型筛选
+             headers: { authorization: window.sessionStorage.getItem('token') }
+            , before: function (obj) {
+                // 1、动态添加headers中的参数
+                this.headers.authorization= CoreUtil.getData("access_token");
+                // 2、动态添加的其它参数
+                //this.data.type= outerType
+            }
+             , done: function (res) {
+               // alert(JSON.stringify(res))
+                if (res.code == 0) {
+                    layer.msg('上传成功');
+                    Param.fileName=res.data;
+                } else {
+                    layer.msg('上传失败'+res.message);
+                }
+
+                console.log(res);
+            }
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#entryDate', //可入职时间
+            done: function (value, date, endDate) {
+                // alert(value);
+                Param.entryDate = value;
+            }
+        });
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#graduatedDate', //毕业时间
+            done: function (value, date, endDate) {
+                // alert(value);
+                Param.graduatedDate = value;
+            }
+        });
+        laydate.render({
+            elem: '#arriveDate', //实际到岗时间
+            done: function (value, date, endDate) {
+                //alert(value);
+                Param.arriveDate = value;
+            }
+        });
+        laydate.render({
+            elem: '#createTime'
+            , type: 'datetime'
+            , range: '~'
+            , done: function (value, date, endDate) {
+                if (value != null && value != undefined && value != "") {
+                    searchParam.startTime = value.split("~")[0];
+                    searchParam.endTime = value.split("~")[1];
+                } else {
+                    searchParam.startTime = null;
+                    searchParam.endTime = null;
+                }
+            }
+        });
+        $("#search").click(function () {
+            searchParam.id = $("#id").val();
+            searchParam.status = $("#status").val();
+            searchParam.processCode = $("#processCode").val();
+            searchParam.pageNum = 1;
+            CoreUtil.sendAjax("/customer/needs", JSON.stringify(searchParam), function (res) {
+                laypageTable(res.data.totalRows, searchParam.pageNum);
+                if (res.data.list != null) {
+                    loadTable(res.data.list);
+                }
+            }, "POST", false, function (res) {
+                layer.msg("抱歉！您暂无获取用户列表的权限");
+                var noAuthorityData = [];
+                loadTable(noAuthorityData);
+            });
+        });
+
+        table.on('toolbar(info_table)', function (obj) {
+
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'sendRecruitRequest':
+
+                    sendRequest();
+                    break;
+                case 'batchDeleted':
+                    var checkStatus = table.checkStatus(obj.config.id);
+                    var data = checkStatus.data;
+                    if (data.length == 0) {
+                        layer.msg("请选择要批量删除的用户");
+                    } else {
+                        var ids = [];
+                        $(data).each(function (index, item) {
+                            ids.push(item.id);
+                        });
+                        tipDialog(ids, "选中的");
+                    }
+                    break;
+
+            }
+            ;
+        });
+        table.on('tool(info_table)', function (obj) {
+            var data = obj.data;
+
+            switch (obj.event) {
+                case 'del':
+                    var ids = [];
+                    ids.push(data.id);
+                    tipDialog(ids, data.id);
+                    break;
+                case 'edit':
+                    $(".info_table_div").hide();
+                    $(".operation_info").show();
+                    $(".title").html("添加候选人");
+                    $(".operation_info input[name=id]").val("");
+                    $(".operation_info input[name=needsId]").val(data.needsId);
+                    $(".operation_info input[name=candidateName]").val("");
+                    $(".operation_info input[name=school]").val("");
+                    $(".operation_info input[name=personWork]").val("");
+                    $(".operation_info input[name=phone]").val("");
+                    $(".operation_info input[name=idCard]").val("");
+                    $(".operation_info input[name=entryDate]").val("");
+                    $(".operation_info input[name=graduatedDate]").val("");
+                    $(".operation_info input[name=profession]").val("");
+                    $(".operation_info input[name=sex]").val("");
+                    $(".operation_info input[name=pravidorName]").val("");
+                    $(".operation_info input[name=contractNature]").val("");
+                    $(".operation_info input[name=arriveDate]").val("");
+                    $(".operation_info input[name=isLeave]").val("");
+                    $(".operation_info input[name=price]").val("");
+                    $(".operation_info input[name=fileName]").val("");
+                    $(".operation_info input[name=pathName]").val("");
+
+                    if (data.status == 1) {
+                        $(".operation_info input[name=status]").attr('checked', 'checked');
+                        $(".operation_info input[name=status]").attr('type', 'hidden').val(1);
+                        var x = document.getElementsByClassName("layui-unselect layui-form-switch");
+                        x[0].setAttribute("class", "layui-unselect layui-form-switch layui-form-onswitch");
+                        var d = document.getElementsByTagName('em')[0];
+                        d.firstChild.nodeValue = '启用';
+                    } else {
+                        $(".operation_info input[name=status]").attr('type', 'hidden').removeAttr("checked").val(2);
+                        var x = document.getElementsByClassName("layui-unselect layui-form-switch");
+                        x[0].setAttribute("class", "layui-unselect layui-form-switch");
+                        var d = document.getElementsByTagName('em')[0];
+                        d.firstChild.nodeValue = '禁用';
+                    }
+                    form.render(); //更新全部
+                    initTree("");
+                    break;
+                case 'operationDetail':
+                    toDetail(data);
+                    break;
+            }
+        });
+
+        //提交请求
+        form.on('submit(submit)', function (data) {
+            // alert(JSON.stringify(data));
+            Param.needsId = data.field.needsId;
+            Param.candidateName = data.field.candidateName;
+            Param.school = data.field.school;
+            Param.personWork = data.field.personWork;
+            Param.phone = data.field.phone;
+            Param.idCard = data.field.idCard;
+            Param.entryDate = $("#entryDate").val();//data.field.entryDate;
+            Param.graduatedDate = $("#graduatedDate").val();//data.field.graduatedDate;
+            Param.profession = data.field.profession;
+            Param.sex = data.field.sex;
+            Param.pravidorName = data.field.pravidorName;
+            Param.contractNature = data.field.contractNature;
+            Param.arriveDate = $("#arriveDate").val();//data.field.arriveDate;
+            Param.isLeave = data.field.isLeave;
+            Param.price = data.field.price;
+            Param.fileName = data.field.fileName;
+            Param.pathName = data.field.pathName;
+
+            CoreUtil.sendAjax("/customer/addCandidateInfo", JSON.stringify(Param), function (res) {
+                $(".user_table_div").show();
+                $(".operation_user").hide();
+                $(".layui-laypage-btn").click();
+                $("#info-form")[0].reset();
+                layui.form.render();
+                if(res.code==0){
+                    Param.needsId = "";
+                    Param.candidateName = "";
+                    Param.school = "";
+                    Param.personWork = "";
+                    Param.phone = "";
+                    Param.idCard = "";
+                    Param.entryDate ="";//data.field.entryDate;
+                    $("#entryDate").val("");
+                    Param.graduatedDate ="";//data.field.graduatedDate;
+                    $("#graduatedDate").val("")
+                    Param.profession ="";//
+                    Param.sex = "";
+                    Param.pravidorName = "";
+                    Param.contractNature = "";
+                    Param.arriveDate ="";//data.field.arriveDate;
+                    $("#arriveDate").val("");
+                    Param.isLeave = "";
+                    Param.price = "";
+                    Param.fileName = "";
+                    Param.pathName = "";
+                    layer.msg("添加成功");
+                }else{
+                    layer.msg("抱歉！"+res.message);
+                }
+
+            }, "POST", false, function (res) {
+                layer.msg("抱歉！您暂无新增用户的权限");
+            });
+
+            return false;
+        });
+        //取消
+        $("#btn_cancel").click(function () {
+            $(".info_table_div").show();
+            $(".operation_info").hide();
+            return false;
+        });
+        var toSupplier = function () {
+            //弹出
+            var url="/index/infos/supplier";
+            parent.layer.open({
+                zIndex: 1005,
+                type: 2,    //弹出类型
+                title: '供应商详细',   //标题
+                offset: '50px',
+                skin: 'layui-layer-molv',
+                closeBtn: 1,    //显示关闭按钮
+                shade: [0],   //遮罩透明度
+                area: ['80%', '95%'],  //打开窗口的宽高
+                time: 0,    //几秒后自动关闭，默认0时不关闭
+                anim: 1,    //动画效果
+                resize: false,  //设置成不允许拉伸
+                content: url,  //iframe的url
+                btn: ['确定','关闭'],
+                yes: function (index, layero) {
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    //当点击‘确定'按钮的时候，获取弹出层返回的值
+                    var iframeWindow = window['layui-layer-iframe'+ index];
+                    var res= iframeWindow.callbackdata();
+                    alert(index+"=="+JSON.stringify(res));
+                    var checkStatus = iframeWindow.layui.table.checkStatus('ID');
+                    alert(index+"=="+2);
+                    var data = checkStatus.data;
+                    alert(index+"=="+JSON.stringify(data));
+
+                    CoreUtil.sendAjax("/customer/sendRecruitRequest", "", function (res) {
+                        layer.msg(res.message);
+                        $(".layui-laypage-btn").click();
+                    }, "POST", false, function (res) {
+                        layer.msg("抱歉！您暂无删除需求的权限");
+                    });
+                }
+            });
+        }
+        /*
+        拉取网络请求
+        * */
+        var sendRequest = function () {
+            toSupplier();
+           /* layer.open({
+                content: "获取最新需求吗?",
+                yes: function (index, layero) {
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    CoreUtil.sendAjax("/customer/sendRecruitRequest", "", function (res) {
+                        layer.msg(res.message);
+                        $(".layui-laypage-btn").click();
+                    }, "POST", false, function (res) {
+                        layer.msg("抱歉！您暂无删除需求的权限");
+                    });
+                }
+            })*/
+        }
+        var toDetail = function (data) {
+            // alert(JSON.stringify(data));
+            // debugger;
+            //弹出
+            // var url = "/index/infos/edit"
+            var url="/index/infos/detail?"+"needsId="+data.id;
+            parent.layer.open({
+                zIndex: 1005,
+                type: 2,    //弹出类型
+                title: '候选详细',   //标题
+                offset: '50px',
+                skin: 'layui-layer-molv',
+                closeBtn: 1,    //显示关闭按钮
+                shade: [0],   //遮罩透明度
+                area: ['80%', '95%'],  //打开窗口的宽高
+                time: 0,    //几秒后自动关闭，默认0时不关闭
+                anim: 1,    //动画效果
+                resize: false,  //设置成不允许拉伸
+                content: url  //iframe的url
+            });
+            /*  if (top.layui.index) {
+                  top.layui.index.openTabsPage(url, data.processCode);
+              } else {
+                  window.open(url)
+              }*/
+        }
+        //删除
+        var tipDialog = function (ids, title) {
+            //debugger;
+            layer.open({
+                content: '确定要删除' + title + "吗?",
+
+                yes: function (index, layero) {
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    CoreUtil.sendAjax("/customer/delete", JSON.stringify(ids), function (res) {
+                        layer.msg(res.message);
+                        $(".layui-laypage-btn").click();
+                    }, "DELETE", false, function (res) {
+                        layer.msg("抱歉！您暂无删除需求的权限");
+                    });
+                }
+            });
+        };
+        form.on('switch(switch)', function () {
+            $(".operation_info input[name=status]").attr('type', 'hidden').val(this.checked ? 1 : 2);
+
+        });
+
+    });
+</script>
+</html>

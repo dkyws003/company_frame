@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/custom.form.css">
+</head>
+<body>
+
+<div class="info_table_div">
+    <div id="searchParam" shiro:hasPermission="sys:infos:list">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" id="id" class="layui-input" autocomplete="off" placeholder="请输入查询ID">
+            </div>
+
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="createTime" placeholder="创建时间">
+            </div>
+            <div class="layui-input-inline layui-form">
+                <select id="status">
+                    <option value="">请选择账号状态</option>
+                    <option value="1">正常</option>
+                    <option value="2">禁用</option>
+                </select>
+            </div>
+            <div class="layui-input-inline ">
+                <button class="layui-btn" id="search">查询</button>
+            </div>
+        </div>
+
+    </div>
+    <table class="layui-hide" id="info_table" lay-filter="info_table"></table>
+    <div id="laypage" class=" $(‘.layui-laypage-btn’).click();"></div>
+</div>
+<div id="deptTree" style="display: none"></div>
+<div id="roles" class="demo-transfer" style="display: none"></div>
+</body>
+<script type="text/html" id="toolbar">
+    <!--   <div class="layui-btn-group">
+           <button type="button" class="layui-btn" lay-event="batchDeleted" shiro:hasPermission="sys:infos:deleted">
+               <i class="layui-icon">&#xe608;</i> 批量删除
+           </button>
+       </div>-->
+</script>
+<script type="text/html" id="tool">
+    <a class="layui-btn layui-btn-xs" lay-event="useselect" shiro:hasPermission="sys:infos:add">选择</a>
+    <!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sys:infos:deleted">删除</a>-->
+</script>
+<script src="/layui/layui.all.js"></script>
+<script src="/js/core.util.js"></script>
+<script>
+    var table = layui.table;
+    var laypage = layui.laypage
+    var form = layui.form;
+    var layer = layui.layer;
+    var $ = jQuery = layui.jquery;
+    var laydate = layui.laydate;
+    var tree = layui.tree;
+    var transfer = layui.transfer;
+    layui.use(['table', 'laypage', 'layer', 'laydate', 'tree', 'transfer'], function () {
+        var searchParam = {
+            id: null,
+            status: null,
+            startTime: null,
+            endTime: null,
+            pageNum: 1,
+            pageSize: 10
+        }
+        //searchParam.needsId=[[${needsId}]];
+        CoreUtil.sendAjax("/customer/getsupplier", JSON.stringify(searchParam), function (res) {
+            laypageTable(res.data.totalRows, searchParam.pageNum);
+            if (res.data.list != null) {
+                loadTable(res.data.list);
+            }
+        }, "POST", false, function (res) {
+            layer.msg("抱歉！您暂无获取用户列表的权限");
+            var noAuthorityData = [];
+            loadTable(noAuthorityData);
+        });
+        var laypageTable = function (count, currentPage) {
+            laypage.render({
+                elem: 'laypage'
+                , count: count
+                , limit: searchParam.pageSize
+                , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                , curr: location.hash.replace('#!currentPage=', '') //获取起始页
+                , hash: 'currentPage' //自定义hash值
+                , jump: function (obj, first) {
+                    if (!first) {
+                        searchParam.pageNum = obj.curr;
+                        searchParam.pageSize = obj.limit;
+                        CoreUtil.sendAjax("/customer/getsupplier", JSON.stringify(searchParam), function (res) {
+                            if (res.data.list != null) {
+                                loadTable(res.data.list);
+                                laypageTable(res.data.totalRows, searchParam.pageNum);
+                            }
+
+                        }, "POST", false, function (res) {
+                            layer.msg("抱歉！您暂无获取用户列表的权限");
+                            var noAuthorityData = [];
+                            loadTable(noAuthorityData);
+                        });
+                    }
+                }
+            });
+        };
+        //渲染table
+        var loadTable = function (data) {
+            table.render({
+                elem: '#info_table'
+                , cols: [
+                    [
+                        {type: 'checkbox', fixed: 'left'},
+                        {id:"ID",field: 'id', title: 'ID', width: 70, sort: true},
+                        {field: 'providerName', title: '供应商名称', width: 200},
+                        {field: 'providerCode', title: '供应商编码', width: 130},
+                        {
+                            field: 'createTime', title: '创建时间', minWidth: 150, templet: function (item) {
+                                return CoreUtil.formattime(item.createTime);
+                            }
+                        },
+                        {
+                            field: 'updateTime', title: '更新时间', minWidth: 150, templet: function (item) {
+                                return CoreUtil.formattime(item.updateTime);
+                            }
+                        },
+                        {
+                            field: 'status', title: '状态', width: 100, templet: function (item) {
+                                if (item.status === 1) {
+                                    return '  <input type="checkbox" lay-skin="switch" lay-text="正常|禁用" checked disabled>';
+                                }
+                                if (item.status === 2) {
+                                    return '  <input type="checkbox" lay-skin="switch" lay-text="正常|禁用" disabled>';
+                                }
+                            }
+                        },
+                        {width: 260, toolbar: "#tool", title: '操作'}
+                    ]
+                ]
+                , data: data
+                , even: true
+                , limit: data.length
+                , limits: [10, 20, 30, 40, 50]
+                , toolbar: '#toolbar'
+
+            });
+        };
+        laydate.render({
+            elem: '#createTime'
+            , type: 'datetime'
+            , range: '~'
+            , done: function (value, date, endDate) {
+                if (value != null && value != undefined && value != "") {
+                    searchParam.startTime = value.split("~")[0];
+                    searchParam.endTime = value.split("~")[1];
+                } else {
+                    searchParam.startTime = null;
+                    searchParam.endTime = null;
+                }
+
+            }
+        });
+        $("#search").click(function () {
+            searchParam.id = $("#id").val();
+            searchParam.status = $("#status").val();
+            searchParam.processCode = $("#processCode").val();
+            searchParam.pageNum = 1;
+            CoreUtil.sendAjax("/customer/getsupplier", JSON.stringify(searchParam), function (res) {
+                laypageTable(res.data.totalRows, searchParam.pageNum);
+                if (res.data.list != null) {
+                    loadTable(res.data.list);
+                }
+            }, "POST", false, function (res) {
+                layer.msg("抱歉！您暂无获取用户列表的权限");
+                var noAuthorityData = [];
+                loadTable(noAuthorityData);
+            });
+        });
+
+        table.on('toolbar(info_table)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'batchDeleted':
+                    var checkStatus = table.checkStatus(obj.config.id);
+                    var data = checkStatus.data;
+                    if (data.length == 0) {
+                        layer.msg("请选择要批量删除的用户");
+                    } else {
+                        var ids = [];
+                        $(data).each(function (index, item) {
+                            ids.push(item.id);
+                        });
+                        tipDialog(ids, "选中的");
+                    }
+                    break;
+            }
+            ;
+        });
+        table.on('tool(info_table)', function (obj) {
+            var data = obj.data;
+
+            switch (obj.event) {
+                case 'del':
+                    var ids = [];
+                    ids.push(data.id);
+                    tipDialog(ids, data.id);
+                    break;
+                case 'useselect':
+                    selectDialog(data.providerCode);
+                    break;
+
+            }
+        });
+        $("#btn_cancel").click(function () {
+            $(".info_table_div").show();
+            $(".operation_info").hide();
+            return false;
+        });
+        //选择
+       var datacode="123";
+        var selectDialog = function (providerCode) {
+            alert(providerCode);
+
+            var index=parent.layer.getFrameIndex(window.name); //获取当前窗口的name
+            parent.layer.close(index);
+            //window.parent.location.reload();
+        }
+
+        var callbackdata = function callbackdata() {
+            var data = datacode;
+            return data;
+        }
+
+        //删除
+        var tipDialog = function (ids, title) {
+            //debugger;
+            layer.open({
+                content: '确定要删除' + title + "吗?",
+
+                yes: function (index, layero) {
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    CoreUtil.sendAjax("/customer/delete", JSON.stringify(ids), function (res) {
+                        layer.msg(res.message);
+                        $(".layui-laypage-btn").click();
+                    }, "DELETE", false, function (res) {
+                        layer.msg("抱歉！您暂无删除需求的权限");
+                    });
+                }
+            });
+        };
+        form.on('switch(switch)', function () {
+            $(".operation_info input[name=status]").attr('type', 'hidden').val(this.checked ? 1 : 2);
+
+        });
+
+    });
+</script>
+</html>

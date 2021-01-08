@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szxx.recruit.mapper.CandidateInformationMapper">
+  <resultMap id="BaseResultMap" type="com.szxx.recruit.entity.CandidateInformation">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="needs_id" jdbcType="VARCHAR" property="needsId" />
+    <result column="process_code" jdbcType="VARCHAR" property="processCode" />
+    <result column="candidate_name" jdbcType="VARCHAR" property="candidateName" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="person_work" jdbcType="VARCHAR" property="personWork" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="entry_date" jdbcType="DATE" property="entryDate" />
+    <result column="graduated_date" jdbcType="DATE" property="graduatedDate" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="pravidor_name" jdbcType="VARCHAR" property="pravidorName" />
+    <result column="contract_nature" jdbcType="TINYINT" property="contractNature" />
+    <result column="arrive_date" jdbcType="DATE" property="arriveDate" />
+    <result column="is_leave" jdbcType="VARCHAR" property="isLeave" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="path_name" jdbcType="VARCHAR" property="pathName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <insert id="insert" parameterType="com.szxx.recruit.entity.CandidateInformation">
+    insert into candidate_information (id, needs_id, process_code, 
+      candidate_name, school, person_work, 
+      phone, id_card, entry_date, 
+      graduated_date, profession, sex, 
+      pravidor_name, contract_nature, arrive_date, 
+      is_leave, price, file_name, 
+      path_name, create_time, update_time, 
+      deleted, `status`)
+    values (#{id,jdbcType=VARCHAR}, #{needsId,jdbcType=VARCHAR}, #{processCode,jdbcType=VARCHAR}, 
+      #{candidateName,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, #{personWork,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{entryDate,jdbcType=DATE}, 
+      #{graduatedDate,jdbcType=DATE}, #{profession,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
+      #{pravidorName,jdbcType=VARCHAR}, #{contractNature,jdbcType=TINYINT}, #{arriveDate,jdbcType=DATE}, 
+      #{isLeave,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, 
+      #{pathName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=TINYINT}, #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.szxx.recruit.entity.CandidateInformation">
+    insert into candidate_information
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="needsId != null">
+        needs_id,
+      </if>
+      <if test="processCode != null">
+        process_code,
+      </if>
+      <if test="candidateName != null">
+        candidate_name,
+      </if>
+      <if test="school != null">
+        school,
+      </if>
+      <if test="personWork != null">
+        person_work,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="entryDate != null">
+        entry_date,
+      </if>
+      <if test="graduatedDate != null">
+        graduated_date,
+      </if>
+      <if test="profession != null">
+        profession,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="pravidorName != null">
+        pravidor_name,
+      </if>
+      <if test="contractNature != null">
+        contract_nature,
+      </if>
+      <if test="arriveDate != null">
+        arrive_date,
+      </if>
+      <if test="isLeave != null">
+        is_leave,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="fileName != null">
+        file_name,
+      </if>
+      <if test="pathName != null">
+        path_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="needsId != null">
+        #{needsId,jdbcType=VARCHAR},
+      </if>
+      <if test="processCode != null">
+        #{processCode,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateName != null">
+        #{candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="personWork != null">
+        #{personWork,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="entryDate != null">
+        #{entryDate,jdbcType=DATE},
+      </if>
+      <if test="graduatedDate != null">
+        #{graduatedDate,jdbcType=DATE},
+      </if>
+      <if test="profession != null">
+        #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="pravidorName != null">
+        #{pravidorName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractNature != null">
+        #{contractNature,jdbcType=TINYINT},
+      </if>
+      <if test="arriveDate != null">
+        #{arriveDate,jdbcType=DATE},
+      </if>
+      <if test="isLeave != null">
+        #{isLeave,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="pathName != null">
+        #{pathName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <sql id="Base_Column_List">
+   id,
+   needs_id,
+   process_code,
+   candidate_name,
+   school,
+   person_work,
+   phone,
+   id_card,
+   entry_date,
+   graduated_date,
+   profession,
+   sex,
+   pravidor_name,
+   contract_nature,
+   arrive_date,
+   is_leave,
+   price,
+   file_name,
+   path_name,
+   create_time,
+   update_time,
+   deleted,
+   status
+  </sql>
+    <select id="selectAll" resultMap="BaseResultMap"
+            parameterType="com.szxx.recruit.vo.req.infoPageReqVO">
+      select <include refid="Base_Column_List"></include>
+      from candidate_information
+      <where>
+        deleted=1
+        <if test="needsId!=null and needsId!=''">
+          AND needs_id =#{needsId}
+        </if>
+        <if test="id!=null and id!=''">
+          AND id LIKE concat('%',#{id},'%')
+        </if>
+        <if test="startTime!=null and startTime!=''">
+          AND create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+          AND create_time &lt;= #{endTime}
+        </if>
+
+        <if test="status!=null and status!='' or status==0 ">
+          AND `status`=#{status}
+        </if>
+      </where>
+      order by create_time DESC
+
+    </select>
+</mapper>
