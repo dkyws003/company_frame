@@ -1,5 +1,6 @@
 package com.szxx.recruit.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.szxx.recruit.constants.Constant;
 import com.szxx.recruit.utils.AESUtils;
@@ -12,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -70,8 +73,15 @@ public class CustomerReqServiceImpl implements CustomerReqService {
         String resp= FastHttpClient.post().url(url).addParams(paramMap).build().execute().string();
         return resp;*/
         String url= Constant.ADD_CANDIDATE_INFO;
-        Map<String,Object> paramMap=objectToMap(info);
+      /*  Map<String,Object> paramMap=objectToMap(info);
         String bodyciphertext= AESUtils.encrypt(paramMap.toString(),AESUtils.KEY);
+   */
+        List<InfoAddReqVO> list=new ArrayList<>();
+        list.add(info);
+        //2.将list转换为json格式
+        String json = JSONArray.toJSONString(list).toString();
+        String bodyciphertext= AESUtils.encrypt(json,AESUtils.KEY);
+
         Response response=FastHttpClient.
                 post().
                 addHeader("Content-Type","application/json").

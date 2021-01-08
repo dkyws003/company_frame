@@ -6,10 +6,11 @@ import lombok.NonNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class InfoAddReqVO {
+public class InfoAddReqVO implements Serializable {
 
     @ApiModelProperty(value = "需求主键")
     @NotNull(message = "需求id不为空")
