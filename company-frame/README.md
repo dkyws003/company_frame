@@ -23,7 +23,7 @@
 - 启动项目
 - 接口文档访问 http://localhost:8080/swagger-ui.html#/
 - 登录地址 http://localhost:8080/index/login
-- 登录密码 都是 666666
+- 登录密码 
 
 #### 效果展示
 
