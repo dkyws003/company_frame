@@ -102,12 +102,16 @@
     </div>
 </script>
 <script type="text/html" id="tool">
+    {{#  if(d.id !="fcf34b56-a7a2-4719-9236-867495e74c31"){  }}
     <a class="layui-btn  layui-btn-xs" lay-event="operationRole" shiro:hasPermission="sys:user:role:detail">赋予角色</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="sys:user:update">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sys:user:deleted">删除</a>
-</script>
+    {{# }else{  }}
+    {{# }  }}
+   </script>
 <script src="/layui/layui.all.js"></script>
 <script src="/js/core.util.js"></script>
+
 <script>
     var table = layui.table;
     var laypage = layui.laypage
