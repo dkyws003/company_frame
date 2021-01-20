@@ -9,10 +9,7 @@ import com.szxx.recruit.mapper.RecSupplierMapper;
 import com.szxx.recruit.utils.AESUtils;
 import com.szxx.recruit.utils.DataResult;
 import com.szxx.recruit.utils.PageUtils;
-import com.szxx.recruit.vo.req.InfoAddReqVO;
-import com.szxx.recruit.vo.req.infoPageReqVO;
-import com.szxx.recruit.vo.req.needsPageReqVO;
-import com.szxx.recruit.vo.req.supplierPageReqVO;
+import com.szxx.recruit.vo.req.*;
 import com.szxx.recruit.vo.resp.PageVO;
 import com.szxx.recruit.entity.CandidateInformation;
 import com.szxx.recruit.entity.RecruitmentNeeds;
@@ -168,6 +165,20 @@ public class CustomerServiceImpl implements CustomerService {
         PageHelper.startPage(vo.getPageNum(),vo.getPageSize());
         List<RecSupplier> list = recSupplierMapper.selectAll(vo);
         return PageUtils.getPageVO(list);
+    }
+    /*
+     * 更新选择状态
+     * */
+    @Override
+    public void updateSwitch(UpdateSwitchVO vo) {
+        RecruitmentNeeds needs=new RecruitmentNeeds();
+        needs.setUpdateTime(new Date());
+        needs.setStatus(vo.getStatus());
+        needs.setId(vo.getId());
+        int i = recruitmentNeedsMapper.updateByPrimaryKeySelective(needs);
+        if (i==0){
+            throw new BusinessException(BaseResponseCode.OPERATION_ERRO);
+        }
     }
 
 

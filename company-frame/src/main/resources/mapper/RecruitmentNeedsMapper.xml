@@ -70,7 +70,7 @@
     insert into recruitment_needs (id, process_ode, jd_description, 
       jd_path, `status`, create_time, 
       update_time, deleted)
-    values (#{id,jdbcType=VARCHAR}, #{processOde,jdbcType=VARCHAR}, #{jdDescription,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{processCode,jdbcType=VARCHAR}, #{jdDescription,jdbcType=VARCHAR}, 
       #{jdPath,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=TINYINT})
   </insert>
@@ -80,7 +80,7 @@
       <if test="id != null">
         id,
       </if>
-      <if test="processOde != null">
+      <if test="processCode != null">
         process_ode,
       </if>
       <if test="jdDescription != null">
@@ -106,8 +106,8 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="processOde != null">
-        #{processOde,jdbcType=VARCHAR},
+      <if test="processCode != null">
+        #{processCode,jdbcType=VARCHAR},
       </if>
       <if test="jdDescription != null">
         #{jdDescription,jdbcType=VARCHAR},
@@ -132,8 +132,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.szxx.recruit.entity.RecruitmentNeeds">
     update recruitment_needs
     <set>
-      <if test="processOde != null">
-        process_ode = #{processOde,jdbcType=VARCHAR},
+      <if test="processCode != null">
+        process_ode = #{processCode,jdbcType=VARCHAR},
       </if>
       <if test="jdDescription != null">
         jd_description = #{jdDescription,jdbcType=VARCHAR},
@@ -158,7 +158,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.szxx.recruit.entity.RecruitmentNeeds">
     update recruitment_needs
-    set process_ode = #{processOde,jdbcType=VARCHAR},
+    set process_ode = #{processCode,jdbcType=VARCHAR},
       jd_description = #{jdDescription,jdbcType=VARCHAR},
       jd_path = #{jdPath,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=TINYINT},

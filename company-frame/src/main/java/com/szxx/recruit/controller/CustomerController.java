@@ -91,6 +91,25 @@ public class CustomerController {
         return result;
     }
 
+    /*
+     *
+     * 需求列表更新状态
+     */
+    @PostMapping("/update")
+    @ApiOperation(value = "更改需求状态接口")
+    @LogAnnotation(title = "客户管理",action = "更改需求状态")
+    // @RequiresPermissions("sys:infos:deleted")
+    public DataResult update(@RequestBody @Valid UpdateSwitchVO vo,BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            DataResult result=new DataResult(BaseResponseCode.OPERATION_ERRO,bindingResult.getFieldError().getDefaultMessage());
+            return result;
+        }
+        customerService.updateSwitch(vo);
+        return DataResult.success();
+    }
+
+
+    /*===========*/
 
     /*
      *
@@ -100,7 +119,7 @@ public class CustomerController {
     @ApiOperation(value = "删除需求接口")
     @LogAnnotation(title = "客户管理",action = "删除需求")
    // @RequiresPermissions("sys:infos:deleted")
-    public DataResult<PageVO<RecruitmentNeeds>> delete(
+    public DataResult delete(
           @RequestBody @ApiParam(value = "id集合")
           List<String> ids, HttpServletRequest request){
           if(ids==null||ids.size()==0){

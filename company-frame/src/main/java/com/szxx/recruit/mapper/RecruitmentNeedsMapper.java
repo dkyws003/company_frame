@@ -22,4 +22,5 @@ public interface RecruitmentNeedsMapper {
     List<RecruitmentNeeds> selectAll(needsPageReqVO vo);
 
     int deletedNeeds(@Param("ids") List<String> ids);
+
 }

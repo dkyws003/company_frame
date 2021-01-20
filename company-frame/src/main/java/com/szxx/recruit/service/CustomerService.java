@@ -2,10 +2,7 @@ package com.szxx.recruit.service;
 
 import com.szxx.recruit.entity.RecSupplier;
 import com.szxx.recruit.utils.DataResult;
-import com.szxx.recruit.vo.req.InfoAddReqVO;
-import com.szxx.recruit.vo.req.infoPageReqVO;
-import com.szxx.recruit.vo.req.needsPageReqVO;
-import com.szxx.recruit.vo.req.supplierPageReqVO;
+import com.szxx.recruit.vo.req.*;
 import com.szxx.recruit.vo.resp.PageVO;
 import com.szxx.recruit.entity.CandidateInformation;
 import com.szxx.recruit.entity.RecruitmentNeeds;
@@ -44,4 +41,8 @@ public interface CustomerService {
     * 获得供应商信息列表
     * */
     PageVO<RecSupplier> getPageSupplier(supplierPageReqVO vo);
+    /*
+    * 更新选择状态
+    * */
+    void updateSwitch(UpdateSwitchVO vo);
 }

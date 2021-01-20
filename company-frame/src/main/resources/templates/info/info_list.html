@@ -14,7 +14,8 @@
         <div class="layui-container">
             <button type="button" class="layui-btn" id="uploadbtn"><i class="layui-icon"></i>上传文件</button>
             <span></span>
-            <form class="layui-form " action="" lay-filter="info-form" id="info-form" style="width: 700px;margin-top: 10px">
+            <form class="layui-form " action="" lay-filter="info-form" id="info-form"
+                  style="width: 700px;margin-top: 10px">
                 <input name="id" hidden/>
                 <input name="needsId" hidden/>
                 <div class="layui-form-item">
@@ -236,7 +237,7 @@
 <script type="text/html" id="toolbar">
     <div class="layui-btn-group">
         <button type="button" class="layui-btn" lay-event="sendRecruitRequest" shiro:hasPermission="sys:infos:add">
-            <i class="layui-icon" id ="codespan" >&#xe9aa;</i> 获取需求
+            <i class="layui-icon" id="codespan">&#xe9aa;</i> 获取需求
 
         </button>
 
@@ -253,6 +254,10 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="sys:infos:add">添加候选人</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sys:infos:deleted">删除</a>
 </script>
+<script type="text/html" id="switchTpl">
+    <!-- 这里的 checked 的状态只是演示 -->
+    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="正常|禁用" lay-filter="switch1" {{ d.status == 1 ? 'checked' : '' }}>
+</script>
 <script src="/layui/layui.all.js"></script>
 <script src="/js/core.util.js"></script>
 <script>
@@ -264,8 +269,8 @@
     var laydate = layui.laydate;
     var tree = layui.tree;
     var transfer = layui.transfer;
-    var upload=layui.upload;
-    layui.use(['table', 'laypage', 'layer', 'laydate', 'tree', 'transfer', 'form','upload'], function () {
+    var upload = layui.upload;
+    layui.use(['table', 'laypage', 'layer', 'laydate', 'tree', 'transfer', 'form', 'upload'], function () {
         var searchParam = {
             id: null,
             processCode: null,
@@ -354,17 +359,9 @@
                             field: 'updateTime', title: '更新时间', minWidth: 150, templet: function (item) {
                                 return CoreUtil.formattime(item.updateTime);
                             }
-                        },
-                        {
-                            field: 'status', title: '状态', width: 100, templet: function (item) {
-                                if (item.status === 1) {
-                                    return '  <input type="checkbox" lay-skin="switch" lay-text="正常|禁用" checked disabled>';
-                                }
-                                if (item.status === 2) {
-                                    return '  <input type="checkbox" lay-skin="switch" lay-text="正常|禁用" disabled>';
-                                }
-                            }
-                        },
+                        }
+                        ,{field:'status', title:'状态', width:85, templet: '#switchTpl', unresize: true},
+
                         {width: 260, toolbar: "#tool", title: '操作'}
                     ]
                 ]
@@ -382,21 +379,21 @@
             elem: '#uploadbtn'
             , url: '/customer/uploadZipFile' //改成您自己的上传接口
             , accept: 'file' //普通文件
-            ,exts: 'png|jpeg|pdf|jpg|doc|docx|xls|xlsx|zip|rar', //可选的文件类型筛选
-             headers: { authorization: window.sessionStorage.getItem('token') }
+            , exts: 'png|jpeg|pdf|jpg|doc|docx|xls|xlsx|zip|rar', //可选的文件类型筛选
+            headers: {authorization: window.sessionStorage.getItem('token')}
             , before: function (obj) {
                 // 1、动态添加headers中的参数
-                this.headers.authorization= CoreUtil.getData("access_token");
+                this.headers.authorization = CoreUtil.getData("access_token");
                 // 2、动态添加的其它参数
                 //this.data.type= outerType
             }
-             , done: function (res) {
-               // alert(JSON.stringify(res))
+            , done: function (res) {
+                // alert(JSON.stringify(res))
                 if (res.code == 0) {
                     layer.msg('上传成功');
-                    Param.fileName=res.data;
+                    Param.fileName = res.data;
                 } else {
-                    layer.msg('上传失败'+res.message);
+                    layer.msg('上传失败' + res.message);
                 }
 
                 console.log(res);
@@ -461,7 +458,7 @@
             var checkStatus = table.checkStatus(obj.config.id);
             switch (obj.event) {
                 case 'sendRecruitRequest':
-                   // sendRequest();
+                    // sendRequest();
                     toSupplier();
                     break;
                 case 'batchDeleted':
@@ -562,30 +559,30 @@
                 $(".layui-laypage-btn").click();
                 $("#info-form")[0].reset();
                 layui.form.render();
-                if(res.code==0){
+                if (res.code == 0) {
                     Param.needsId = "";
                     Param.candidateName = "";
                     Param.school = "";
                     Param.personWork = "";
                     Param.phone = "";
                     Param.idCard = "";
-                    Param.entryDate ="";//data.field.entryDate;
+                    Param.entryDate = "";//data.field.entryDate;
                     $("#entryDate").val("");
-                    Param.graduatedDate ="";//data.field.graduatedDate;
+                    Param.graduatedDate = "";//data.field.graduatedDate;
                     $("#graduatedDate").val("")
-                    Param.profession ="";//
+                    Param.profession = "";//
                     Param.sex = "";
                     Param.pravidorName = "";
                     Param.contractNature = "";
-                    Param.arriveDate ="";//data.field.arriveDate;
+                    Param.arriveDate = "";//data.field.arriveDate;
                     $("#arriveDate").val("");
                     Param.isLeave = "";
                     Param.price = "";
                     Param.fileName = "";
                     Param.pathName = "";
                     layer.msg("添加成功");
-                }else{
-                    layer.msg("抱歉！"+res.message);
+                } else {
+                    layer.msg("抱歉！" + res.message);
                 }
 
             }, "POST", false, function (res) {
@@ -601,7 +598,7 @@
         });
         var toSupplier = function () {
             //弹出
-            var url="/index/infos/supplier";
+            var url = "/index/infos/supplier";
             parent.layer.open({
                 zIndex: 1005,
                 type: 2,    //弹出类型
@@ -640,7 +637,7 @@
             // debugger;
             //弹出
             // var url = "/index/infos/edit"
-            var url="/index/infos/detail?"+"needsId="+data.id;
+            var url = "/index/infos/detail?" + "needsId=" + data.id;
             parent.layer.open({
                 zIndex: 1005,
                 type: 2,    //弹出类型
@@ -678,11 +675,28 @@
                 }
             });
         };
+        //提交信息
         form.on('switch(switch)', function () {
-            $(".operation_info input[name=status]").attr('type', 'hidden').val(this.checked ? 1 : 2);
-
+            $(".operation_info input[name=status]").attr('type', 'hidden').val(this.checked ? 1 : 0);
         });
-
+        //监听性别操作
+        form.on('switch(switch1)', function(data){
+          //  layer.tips(this.value + ' ' + this.name + '：'+ data.elem.checked, data.othis);
+            var switchParam = {
+                id: null,
+                status: 0
+            };
+            // 得到开关的value值，实际是需要修改的ID值。
+            var id = data.value;
+            var status = this.checked ? 1 : 0;
+            switchParam.id = id;
+            switchParam.status = status;
+            CoreUtil.sendAjax("/customer/update", JSON.stringify(switchParam), function (res) {
+                layer.msg(res.message);
+            }, "POST", false, function (res) {
+                layer.msg(res.message);
+            });
+        });
     });
 </script>
 </html>
